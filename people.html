@@ -1,0 +1,116 @@
+<html>
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.css" type="text/css" />
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis-network.min.js"> </script>
+<center>
+<h1>The distribution of art historians' relations with their subjects of study</h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+
+<style type="text/css">
+
+        #mynetwork {
+            width: 100%;
+            height: 750px;
+            background-color: white;
+            border: 1px solid lightgray;
+            position: relative;
+            float: left;
+        }
+
+        
+
+        
+
+        
+</style>
+
+</head>
+
+<body>
+<div id = "mynetwork"></div>
+
+
+<script type="text/javascript">
+
+    // initialize global variables.
+    var edges;
+    var nodes;
+    var network; 
+    var container;
+    var options, data;
+
+    
+    // This method is responsible for drawing the graph, returns the drawn network
+    function drawGraph() {
+        var container = document.getElementById('mynetwork');
+        
+        
+
+        // parsing and collecting nodes and edges from the python
+        nodes = new vis.DataSet([{"borderWidthSelected": 5, "color": "#23f5ad", "font": {"color": "#1cae81"}, "id": "Federico Zeri", "label": "Federico Zeri", "shape": "dot", "size": 220, "title": "\u003cbr\u003e\u003cb\u003eFederico Zeri\u003c/b\u003e\u003ci\u003e  relations:\u003cbr\u003e\u003c/i\u003e\u003chr\u003e\u003cb\u003eSubjects of study\u003c/b\u003e\u003cbr\u003eDonatello\u003cbr\u003eGiotto di Bondone\u003cbr\u003eGian Lorenzo Bernini\u003cbr\u003eCarlo Crivelli\u003cbr\u003eDonato de\u0027 Bardi\u003cbr\u003eFra Carnevale\u003cbr\u003eCaravaggio\u003cbr\u003eScipione Pulzone\u003cbr\u003eBartolomeo di Tommaso\u003cbr\u003e\u003chr\u003e\u003cb\u003eArt historians\u003c/b\u003e\u003cbr\u003eWolfgang Lotz\u003cbr\u003eLuigi Salerno\u003cbr\u003eRichard Krautheimer\u003cbr\u003eStefano Tumidei\u003cbr\u003eJohn Pope-Hennessy"}, {"borderWidthSelected": 5, "color": "#23f5ad", "font": {"color": "#1cae81"}, "id": "Luigi Salerno", "label": "Luigi Salerno", "shape": "dot", "size": 90, "title": "\u003cbr\u003e\u003cb\u003eLuigi Salerno\u003c/b\u003e\u003ci\u003e  relations:\u003cbr\u003e\u003c/i\u003e\u003chr\u003e\u003cb\u003eSubjects of study\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\u003chr\u003e\u003cb\u003eArt historians\u003c/b\u003e\u003cbr\u003eFederico Zeri"}, {"borderWidthSelected": 5, "color": "#23f5ad", "font": {"color": "#1cae81"}, "id": "Stefano Tumidei", "label": "Stefano Tumidei", "shape": "dot", "size": 90, "title": "\u003cbr\u003e\u003cb\u003eStefano Tumidei\u003c/b\u003e\u003ci\u003e  relations:\u003cbr\u003e\u003c/i\u003e\u003chr\u003e\u003cb\u003eSubjects of study\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\u003chr\u003e\u003cb\u003eArt historians\u003c/b\u003e\u003cbr\u003eFederico Zeri"}, {"borderWidthSelected": 5, "color": "#23f5ad", "font": {"color": "#1cae81"}, "id": "Wolfgang Lotz", "label": "Wolfgang Lotz", "shape": "dot", "size": 90, "title": "\u003cbr\u003e\u003cb\u003eWolfgang Lotz\u003c/b\u003e\u003ci\u003e  relations:\u003cbr\u003e\u003c/i\u003e\u003chr\u003e\u003cb\u003eSubjects of study\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\u003chr\u003e\u003cb\u003eArt historians\u003c/b\u003e\u003cbr\u003eFederico Zeri"}, {"borderWidthSelected": 5, "color": "#23f5ad", "font": {"color": "#1cae81"}, "id": "Richard Krautheimer", "label": "Richard Krautheimer", "shape": "dot", "size": 90, "title": "\u003cbr\u003e\u003cb\u003eRichard Krautheimer\u003c/b\u003e\u003ci\u003e  relations:\u003cbr\u003e\u003c/i\u003e\u003chr\u003e\u003cb\u003eSubjects of study\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\u003chr\u003e\u003cb\u003eArt historians\u003c/b\u003e\u003cbr\u003eFederico Zeri"}, {"borderWidthSelected": 5, "color": "#23f5ad", "font": {"color": "#1cae81"}, "id": "John Pope-Hennessy", "label": "John Pope-Hennessy", "shape": "dot", "size": 90, "title": "\u003cbr\u003e\u003cb\u003eJohn Pope-Hennessy\u003c/b\u003e\u003ci\u003e  relations:\u003cbr\u003e\u003c/i\u003e\u003chr\u003e\u003cb\u003eSubjects of study\u003c/b\u003e\u003cbr\u003e\u003cbr\u003e\u003chr\u003e\u003cb\u003eArt historians\u003c/b\u003e\u003cbr\u003eFederico Zeri"}, {"borderWidthSelected": 5, "color": "#1cae81", "font": {"color": "#1cae81"}, "id": "Caravaggio", "label": "Caravaggio", "shape": "dot", "size": 90, "title": "\u003cbr\u003e\u003cb\u003eCaravaggio\u003c/b\u003e\u003ci\u003e  relations:\u003cbr\u003e\u003c/i\u003e\u003chr\u003e\u003cb\u003eArt historians\u003c/b\u003e\u003cbr\u003eFederico Zeri\u003cbr\u003e"}, {"borderWidthSelected": 5, "color": "#1cae81", "font": {"color": "#1cae81"}, "id": "Gian Lorenzo Bernini", "label": "Gian Lorenzo Bernini", "shape": "dot", "size": 90, "title": "\u003cbr\u003e\u003cb\u003eGian Lorenzo Bernini\u003c/b\u003e\u003ci\u003e  relations:\u003cbr\u003e\u003c/i\u003e\u003chr\u003e\u003cb\u003eArt historians\u003c/b\u003e\u003cbr\u003eFederico Zeri\u003cbr\u003e"}, {"borderWidthSelected": 5, "color": "#1cae81", "font": {"color": "#1cae81"}, "id": "Donato de\u0027 Bardi", "label": "Donato de\u0027 Bardi", "shape": "dot", "size": 90, "title": "\u003cbr\u003e\u003cb\u003eDonato de\u0027 Bardi\u003c/b\u003e\u003ci\u003e  relations:\u003cbr\u003e\u003c/i\u003e\u003chr\u003e\u003cb\u003eArt historians\u003c/b\u003e\u003cbr\u003eFederico Zeri\u003cbr\u003e"}, {"borderWidthSelected": 5, "color": "#1cae81", "font": {"color": "#1cae81"}, "id": "Scipione Pulzone", "label": "Scipione Pulzone", "shape": "dot", "size": 90, "title": "\u003cbr\u003e\u003cb\u003eScipione Pulzone\u003c/b\u003e\u003ci\u003e  relations:\u003cbr\u003e\u003c/i\u003e\u003chr\u003e\u003cb\u003eArt historians\u003c/b\u003e\u003cbr\u003eFederico Zeri\u003cbr\u003e"}, {"borderWidthSelected": 5, "color": "#1cae81", "font": {"color": "#1cae81"}, "id": "Bartolomeo di Tommaso", "label": "Bartolomeo di Tommaso", "shape": "dot", "size": 90, "title": "\u003cbr\u003e\u003cb\u003eBartolomeo di Tommaso\u003c/b\u003e\u003ci\u003e  relations:\u003cbr\u003e\u003c/i\u003e\u003chr\u003e\u003cb\u003eArt historians\u003c/b\u003e\u003cbr\u003eFederico Zeri\u003cbr\u003e"}, {"borderWidthSelected": 5, "color": "#1cae81", "font": {"color": "#1cae81"}, "id": "Fra Carnevale", "label": "Fra Carnevale", "shape": "dot", "size": 90, "title": "\u003cbr\u003e\u003cb\u003eFra Carnevale\u003c/b\u003e\u003ci\u003e  relations:\u003cbr\u003e\u003c/i\u003e\u003chr\u003e\u003cb\u003eArt historians\u003c/b\u003e\u003cbr\u003eFederico Zeri\u003cbr\u003e"}, {"borderWidthSelected": 5, "color": "#1cae81", "font": {"color": "#1cae81"}, "id": "Carlo Crivelli", "label": "Carlo Crivelli", "shape": "dot", "size": 90, "title": "\u003cbr\u003e\u003cb\u003eCarlo Crivelli\u003c/b\u003e\u003ci\u003e  relations:\u003cbr\u003e\u003c/i\u003e\u003chr\u003e\u003cb\u003eArt historians\u003c/b\u003e\u003cbr\u003eFederico Zeri\u003cbr\u003e"}, {"borderWidthSelected": 5, "color": "#1cae81", "font": {"color": "#1cae81"}, "id": "Giotto di Bondone", "label": "Giotto di Bondone", "shape": "dot", "size": 90, "title": "\u003cbr\u003e\u003cb\u003eGiotto di Bondone\u003c/b\u003e\u003ci\u003e  relations:\u003cbr\u003e\u003c/i\u003e\u003chr\u003e\u003cb\u003eArt historians\u003c/b\u003e\u003cbr\u003eFederico Zeri\u003cbr\u003e"}, {"borderWidthSelected": 5, "color": "#1cae81", "font": {"color": "#1cae81"}, "id": "Donatello", "label": "Donatello", "shape": "dot", "size": 90, "title": "\u003cbr\u003e\u003cb\u003eDonatello\u003c/b\u003e\u003ci\u003e  relations:\u003cbr\u003e\u003c/i\u003e\u003chr\u003e\u003cb\u003eArt historians\u003c/b\u003e\u003cbr\u003eFederico Zeri\u003cbr\u003e"}]);
+        edges = new vis.DataSet([{"color": "grey", "from": "Federico Zeri", "to": "Luigi Salerno", "value": 1}, {"color": "grey", "from": "Federico Zeri", "to": "Stefano Tumidei", "value": 1}, {"color": "grey", "from": "Wolfgang Lotz", "to": "Federico Zeri", "value": 1}, {"color": "grey", "from": "Richard Krautheimer", "to": "Federico Zeri", "value": 1}, {"color": "grey", "from": "John Pope-Hennessy", "to": "Federico Zeri", "value": 1}, {"color": "#1cae81", "from": "Federico Zeri", "to": "Caravaggio", "value": 2}, {"color": "#1cae81", "from": "Federico Zeri", "to": "Gian Lorenzo Bernini", "value": 2}, {"color": "#1cae81", "from": "Federico Zeri", "to": "Donato de\u0027 Bardi", "value": 2}, {"color": "#1cae81", "from": "Federico Zeri", "to": "Scipione Pulzone", "value": 2}, {"color": "#1cae81", "from": "Federico Zeri", "to": "Bartolomeo di Tommaso", "value": 2}, {"color": "#1cae81", "from": "Federico Zeri", "to": "Fra Carnevale", "value": 2}, {"color": "#1cae81", "from": "Federico Zeri", "to": "Carlo Crivelli", "value": 2}, {"color": "#1cae81", "from": "Federico Zeri", "to": "Giotto di Bondone", "value": 2}, {"color": "#1cae81", "from": "Federico Zeri", "to": "Donatello", "value": 2}]);
+
+        // adding nodes and edges to the graph
+        data = {nodes: nodes, edges: edges};
+
+        var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": false,
+            "type": "continuous"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "barnesHut": {
+            "avoidOverlap": 0,
+            "centralGravity": 0.3,
+            "damping": 0.09,
+            "gravitationalConstant": -80000,
+            "springConstant": 0.001,
+            "springLength": 250
+        },
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+        
+        
+
+        
+
+        network = new vis.Network(container, data, options);
+
+        
+
+
+        
+
+        return network;
+
+    }
+
+    drawGraph();
+
+</script>
+</body>
+</html>
